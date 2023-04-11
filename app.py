@@ -21,6 +21,24 @@ def obtener_dato(id):
         return {"name":registro.name, "amount":registro.amount}
     else:
         return 'Registro no encontrado'
+@app.route('/compraproducto/<int:id>/<int:amount>')
+def comprar_producto(id, amount):
+    registro = MiModelo.query.get(id)
+    if registro:
+        registro.amount = registro.amount - amount
+        db.session.commit()
+        return {"name":registro.name, "amount":registro.amount}
+    else:
+        return 'Registro no encontrado'
 
+@app.route('/agregaproducto/<int:id>/<int:amount>')
+def agregar_producto(id, amount):
+    registro = MiModelo.query.get(id)
+    if registro:
+        registro.amount = registro.amount + amount
+        db.session.commit()
+        return {"name":registro.name, "amount":registro.amount}
+    else:
+        return 'Registro no encontrado'
 if __name__ == '__main__':
     app.run()
